@@ -18,15 +18,15 @@ const productSchema = new Schema(
 );
 productSchema.static("findProductsWithReviews", async function (query) {
   const total = await this.countDocuments(query.criteria);
-  console.log("total", total);
   const products = await this.find(query.criteria, query.options.fields)
-    .limit(query.options.limit)
-    .skip(query.options.skip)
     .sort(query.options.sort)
+    .skip(query.options.skip)
+    .limit(query.options.limit)
     .populate({
       path: "reviews",
       //   select: "firstName lastName",
     });
+
   return { total, products };
 });
 export default model("product", productSchema);
