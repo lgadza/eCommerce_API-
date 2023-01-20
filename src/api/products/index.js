@@ -102,8 +102,6 @@ productRouter.delete("/:productId", async (req, res, next) => {
 // ********************************** EMBEDDING**************************
 productRouter.post("/:productId", async (req, res, next) => {
   try {
-    // const currentReview = new ReviewsModel(req.body);
-
     const currentReview = req.body;
 
     if (currentReview) {
@@ -112,12 +110,12 @@ productRouter.post("/:productId", async (req, res, next) => {
         reviewDate: new Date(),
       };
 
+      console.log("this is me", req.params.productId);
       const updatedProduct = await ProductModel.findByIdAndUpdate(
         req.params.productId,
         { $push: { reviews: productToInsert } },
         { new: true, runValidators: true }
       );
-
       if (updatedProduct) {
         res.send(updatedProduct);
       } else {
