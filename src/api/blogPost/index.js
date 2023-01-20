@@ -3,7 +3,7 @@ import createHttpError from "http-errors";
 import BlogPostModel from "./model.js";
 import CommentsModel from "../comments/model.js";
 import q2m from "query-to-mongo";
-import AuthorsModel from "../authors/model.js";
+import AuthorsModel from "../reviews/model.js";
 import LikesModel from "./likesModel.js";
 
 const blogPostRouter = express.Router();
@@ -272,7 +272,6 @@ blogPostRouter.post("/:blogPostId/likes", async (req, res, next) => {
   try {
     const { authorId, quantity } = req.body;
     const blogPost = await BlogPostModel.findById(req.params.blogPostId);
-    console.log("bID", blogPost);
     if (!blogPost)
       return next(
         createHttpError(

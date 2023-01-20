@@ -2,7 +2,6 @@ import express from "express";
 import createHttpError from "http-errors";
 import ProductModel from "./model.js";
 import q2m from "query-to-mongo";
-import ReviewsModel from "./reviewModel.js";
 
 const productRouter = express.Router();
 
@@ -110,12 +109,13 @@ productRouter.post("/:productId", async (req, res, next) => {
         reviewDate: new Date(),
       };
 
-      console.log("this is me", req.params.productId);
       const updatedProduct = await ProductModel.findByIdAndUpdate(
         req.params.productId,
         { $push: { reviews: productToInsert } },
         { new: true, runValidators: true }
       );
+      console.log("this is me", updatedProduct);
+
       if (updatedProduct) {
         res.send(updatedProduct);
       } else {
@@ -247,22 +247,22 @@ productRouter.delete(
     }
   }
 );
-productRouter.post("/:productId/likes", async (req, res, next) => {
+productRouter.post("/:productId/reviews", async (req, res, next) => {
   try {
-    const { reviewId, quantity } = req.body;
+    const review = req.body;
     const product = await ProductModel.findById(req.params.productId);
     if (!product)
       return next(
         createHttpError(
           404,
-          `Blog post with id ${req.params.productId} not found`
+          `Product with id ${req.params.productId} not found`
         )
       );
-    const like = await ReviewsModel.findById(reviewId);
-    if (!like)
-      return next(
-        createHttpError(404, `Review with id ${reviewId} not found!`)
-      );
+    // const like = await ReviewsModel.findById(reviewId);
+    // if (!like)
+    //   return next(
+    //     createHttpError(404, `Review with id ${reviewId} not found!`)
+    //   );
     const isLiked = await LikesModel.findOne({
       product: req.params.productId,
       status: "Like",

@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import ReviewsModel from "./reviewModal.js";
 const { Schema, model } = mongoose;
 
 const productSchema = new Schema(
@@ -9,7 +10,7 @@ const productSchema = new Schema(
     category: { type: String, required: true },
     imageUrl: { type: String, required: true },
     price: { type: Number, required: true },
-    reviews: [{ type: Schema.Types.ObjectId, ref: "Author" }],
+    reviews: [ReviewsModel],
   },
   {
     timestamps: true,

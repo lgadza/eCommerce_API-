@@ -2,9 +2,7 @@ import express from "express";
 import listEndpoints from "express-list-endpoints";
 import cors from "cors";
 import mongoose from "mongoose";
-import blogPostRouter from "./api/blogPost/index.js";
-import commentsRouter from "./api/comments/index.js";
-import authorsRouter from "./api/authors/index.js";
+// import blogPostRouter from "./api/blogPost/index.js";
 import productRouter from "./api/products/index.js";
 import {
   badRequestHandler,
@@ -35,9 +33,7 @@ const corsOpts = {
 server.use(cors(corsOpts));
 
 // ******************************** ENDPOINTS *****************************************
-server.use("/blogPosts", blogPostRouter);
-server.use("/comments", commentsRouter);
-server.use("/authors", authorsRouter);
+// server.use("/blogPosts", blogPostRouter);
 server.use("/products", productRouter);
 
 // ***************************** ERROR HANDLERS ***************************************
