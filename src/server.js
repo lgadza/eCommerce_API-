@@ -4,6 +4,7 @@ import cors from "cors";
 import mongoose from "mongoose";
 // import blogPostRouter from "./api/blogPost/index.js";
 import productRouter from "./api/products/index.js";
+import usersRouter from "./api/testProject/index.js";
 import {
   badRequestHandler,
   notFoundHandler,
@@ -35,6 +36,7 @@ server.use(cors(corsOpts));
 // ******************************** ENDPOINTS *****************************************
 // server.use("/blogPosts", blogPostRouter);
 server.use("/products", productRouter);
+server.use("/users", usersRouter);
 
 // ***************************** ERROR HANDLERS ***************************************
 server.use(badRequestHandler);

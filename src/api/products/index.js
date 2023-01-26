@@ -19,7 +19,7 @@ productRouter.post("/", async (req, res, next) => {
 productRouter.get("/", async (req, res, next) => {
   try {
     // let mongoQuery;
-    // if (req.query.limit && req.query.skip) {
+    // if (req.query.limit && req.query.skip && limit < 50) {
     //   mongoQuery = q2m(req.query);
     // } else {
     //   mongoQuery = q2m({ skip: 1, limit: 1 });
@@ -41,16 +41,14 @@ productRouter.get("/", async (req, res, next) => {
 
 productRouter.get("/:productId", async (req, res, next) => {
   try {
-    const products = await ProductModel.findById(req.params.productId).populate(
-      {
-        path: "reviews",
-      }
-    );
-    if (products) {
+    const product = await ProductModel.findById(req.params.productId).populate({
+      path: "reviews",
+    });
+    if (product) {
       res.send({
-        links: mongoQuery.links("http://localhost:3001/products", total),
-        totalPages: Math.ceil(total / mongoQuery.options.limit),
-        products,
+        // links: mongoQuery.links("http://localhost:3001/products", total),
+        // totalPages: Math.ceil(total / mongoQuery.options.limit),
+        product,
       });
     } else {
       next(
